@@ -19,8 +19,6 @@ var selection = [];
 
 
 
-
-
 //WORKING CODE
 
 /*
@@ -110,7 +108,6 @@ function papaParseJson(tmpCsvData) {
 
 //END WORKING CODE
 
-
 /*
 function csvToJson(csvString) {
     const rows = csvString
@@ -160,62 +157,67 @@ document.getElementById('fileInput').addEventListener('change', function(event) 
 
 /*Testar map*/
 
-
 const hamiltonData = new Map();
 const aucklandData = new Map();
 
 const newZealandData = [hamiltonData, aucklandData];
 
-
 const response2 = fetch("tmp2.csv")
-  .then((response2) => response2.text())
-  .then((response2) => papaParseJsonMap(response2))
-  console.log(hamiltonData)
-  .then((response2) => createChart2(hamiltonData));
+    .then((response2) => response2.text())
+    .then((response2) => papaParseJsonMap(response2))
+    .then((response2) => createChart2(hamiltonData));
+   
 
-function papaParseJsonMap(tmpCsvData){
-    Papa.parse(tmpCsvData, {
-        header: true,
-        complete: function(results) {
-            //console.log("Finished:", results.data); 
-            for (let i = 0; i < results.data.length; i++){
-                if(results.data[i].City === "Hamilton"){
-                    hamiltonData.set((results.data[i].year +"/"+ results.data[i].month), results.data[i].AverageTemperatureFahr)
-                }
-                if(results.data[i].City === "Auckland"){
-                    aucklandData.set((results.data[i].year +"/"+ results.data[i].month), results.data[i].AverageTemperatureFahr)
-                }
-            }
+function papaParseJsonMap(tmpCsvData) {
+  Papa.parse(tmpCsvData, {
+    header: true,
+    complete: function (results) {
+      //console.log("Finished:", results.data);
+      for (let i = 0; i < results.data.length; i++) {
+        if (results.data[i].City === "Hamilton") {
+          hamiltonData.set(
+            results.data[i].year + "/" + results.data[i].month,
+            results.data[i].AverageTemperatureFahr
+          );
         }
-    });
+        if (results.data[i].City === "Auckland") {
+          aucklandData.set(
+            results.data[i].year + "/" + results.data[i].month,
+            results.data[i].AverageTemperatureFahr
+          );
+        }
+      }
+    },
+  });
 }
 
 function createChart2(input) {
-    new Chart(ctx, {
-      type: "line",
-      data: {
-        labels: "Hamilton",
-        datasets: [
-          {
-            label: input.keys(),
-            data: input.values(),
-            backgroundColor: "#00fff0",
-            borderWidth: 3,
-            tension: 0.1,
-          },
-        ],
-      },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true,
-          },
+    const labels = Array.from(input.keys());
+    const data = Array.from(input.values());
+
+  new Chart(ctx, {
+    type: "line",
+    data: {
+      labels: labels,
+      datasets: [
+        {
+          label: "Hamilton",
+          data: data,
+          backgroundColor: "#00fff0",
+          borderWidth: 3,
+          tension: 0.1,
+        },
+      ],
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
         },
       },
-    });
-  }
-
-
+    },
+  });
+}
 
 //Script for checkboxes
 //For now it's only New Zealand, is it possible to make it dynamic?
@@ -226,7 +228,6 @@ const NZTowncheckboxes = [
   document.getElementById("Auckland"),
   document.getElementById("Hamilton"),
 ];
-
 
 NZcheckbox.addEventListener("change", function () {
   if (NZcheckbox.checked) {
@@ -251,6 +252,6 @@ NZTowncheckboxes.forEach((checkbox) => {
 });
 
 //End script for checkboxes
-function toggleHiddenCalendar(){
-    document.getElementById("hiddenCalendar").classList.toggle("show");
+function toggleShow() {
+  document.getElementById("hiddenCalendar").classList.toggle("show");
 }

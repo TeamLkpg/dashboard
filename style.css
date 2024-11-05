@@ -98,7 +98,7 @@ main {
   border-radius: var(--section-sorting-border-radius);
   background-color: #e7e8eb;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  overflow: hidden;
+  /*overflow: hidden;*/
 }
 
 .checkLocationBox {
@@ -208,21 +208,21 @@ footer p {
 }
 
 .show {
-  display: block;
+  display: block !important;
 }
 
 .dropdown-calendar {
   display: none;
-  position: absolute;
   background-color: var(--background-color);
   width: var(--section-sorting-width);
   height: calc(var(--section-sorting-height) / 2);
-  overflow: auto;
-  z-index: 10;
+  z-index: 999;
 }
 
 .dropdown-calendar section{
     display: flex;
     display: row;
     justify-content: space-between;
+    border: 2px solid #999;
+    border-bottom: var(--section-sorting-border-radius);
 }
