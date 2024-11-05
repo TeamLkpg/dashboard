@@ -153,3 +153,44 @@ document.getElementById('fileInput').addEventListener('change', function(event) 
     }
 });
 */
+
+
+
+
+/*Testar map*/
+
+
+let newZealand = new map();
+let ukraine = new map();
+
+
+function papaParseJsonMap(tmpCsvData){
+    Papa.parse(tmpCsvData, {
+        header: true,
+        complete: function(results) {
+            //console.log("Finished:", results.data); 
+            for (let i = 0; i < results.data.length; i++){
+                if(results.data.Country == "Ukraine"){
+                    ukraine.set(results.data.year, results.data.AverageTemperatureFahr);
+                }
+                if(results.data.Country == "New Zealand"){
+                    newZealand.set(results.data.year, results.data.AverageTemperatureFahr);
+                }
+
+               /* //Kanske kan bli fel eftersom month inte är header
+                //recordID.push(results.data[i].record_id)
+                month.push(results.data[i].month)
+                day.push(results.data[i].day)
+                year.push(results.data[i].year)
+                date.push(results.data[i].day + "-" + results.data[i].month + "-" + results.data[i].year)
+                avgTempFahr.push(results.data[i].AverageTemperatureFahr)
+                //avgTempUncFahr.push(results.data[i].AverageTemperatureUncertaintyFahr)
+                city.push(results.data[i].City)
+                //countryID.push(results.data[i].country_id)
+                country.push(results.data[i].Country)
+                //latitude.push(results.data[i].Latitude)
+                //longitude.push(results.data[i].Longitude)*/
+            }
+        }
+    });
+}

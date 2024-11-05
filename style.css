@@ -14,7 +14,13 @@
 
 /*GENERAL*/
 body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
     margin: 0;
+    height: 100vh; 
+    
     background-color: var(--accent-color-main);
 }
 
@@ -70,10 +76,10 @@ header li button{
 main {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    min-height: 75vh;
-    padding-right: 2vw;
-    padding-left: 2vw;
+    justify-content: space-evenly;
+    align-items: center;
+    min-height: 84vh;
+
     background-color: var(--background-color);
 
 }
@@ -81,20 +87,21 @@ main {
 .sortingSection {
     display: flex;
     flex-direction: column;
-    gap: 2vh;
-    width: 20vw;
+    justify-content: space-around;
+    align-items: center;
+    width: 30vw;
+    height: 80vh;
 }
 
 .sortingSection>section {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
+    width: 95%;
     height: var(--section-sorting-height);
     border: 2px solid #999;
     border-radius: var(--section-sorting-border-radius);
     background-color: #e7e8eb;
-    padding: 1vh;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     overflow: hidden;
 }
@@ -109,15 +116,19 @@ main {
 }
 
 .sortingHeader {
-    width: 50vw;
-    text-align: center;
+    width: 100%;
     padding: 0.5vh 0;
-    font-size: 1.1em;
-    background-color: var(--accent-color-main);
-    color: var(--text-color-light);
-    margin-top: -10px;
     margin-bottom: 0;
+    
     z-index: 1;
+
+    margin:0;
+    text-align: center;
+
+    font-size: 1.1em;
+    color: var(--text-color-light);
+
+    background-color: var(--accent-color-main);
 }
 
 .sortingTime label {
@@ -171,19 +182,15 @@ main {
     padding-left: 2vw;
 }
 
-.sortingType {
-    display: flex;
-    align-items: center;
-    color: var(--text-color-dark);
-    font-size: 0.95em;
-    padding: 1vh;
-}
-
 .chartSection {
     background-color: lightgray;
     border-radius: 5em;
     width: 70vw;
-    height: auto;
+    height: 80vh;
+}
+
+.chart{
+    padding: 2vh 2vw;
 }
 
 /*FOOTER*/
