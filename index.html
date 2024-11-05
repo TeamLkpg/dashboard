@@ -29,99 +29,100 @@
       <section class="sortingTime">
         <h3 class="sortingHeader">Timespan</h3>
         <label>
-          Time to start at (min 1850):
+          REPLACE THIS, ask Oskar
           <input type="number" id="startTime" placeholder="1850">
         </label>
         <label>
-          Time to end at (max 2020):
+          REPLACE THIS, ask Oskar
           <input type="number" id="endTime" placeholder="2020">
         </label>
-        <button url="" alt="Klick to choose begining and end to select what span to take a closer look at">
-          TO:DO Calendar</button>
+        <button onclick="toggleShow()" alt="Klick to choose begining and end to select what span to take a closer look at">
+          Improve this?</button>
+          <section id="hiddenCalendar" class="dropdown-calendar">
+            <section>
+              <label>
+                Time to start at (min 1850):
+                <input type="number" id="startTime" placeholder="1850">
+              </label>
+              <label>
+                Time to end at (max 2020):
+                <input type="number" id="endTime" placeholder="2020">
+              </label>
+            </section>
+          </section>
       </section>
 
       <section class="sortingLocation">
         <h3 class="sortingHeader">Location</h3>
         <section class="checkLocationBox">
+
+          <!--SWEDEN-->
           <label class="containerLand">
-            <input type="checkbox" />Land
-            <span id=""></span>
+            <input type="checkbox"/>Sweden
+          </label>
+
+          <label class="containerStad">
+            <input type="checkbox" />Stad1
+          </label>
+
+          <label class="containerStad">
+            <input type="checkbox" />Stad
           </label>
           <label class="containerStad">
             <input type="checkbox" />Stad
-            <span id=""></span>
           </label>
-          <label class="containerStad">
-            <input type="checkbox" />Stad
-            <span id=""></span>
-          </label>
-          <label class="containerStad">
-            <input type="checkbox" />Stad
-            <span id=""></span>
-          </label>
+
+
+          <!--NEW ZEALAND-->
           <label class="containerLand">
-            <input type="checkbox" />Land
-            <span id=""></span>
+            <input type="checkbox" id="New Zealand" value="New Zealand" name="New Zealand"/>New Zealand
           </label>
+
           <label class="containerStad">
-            <input type="checkbox" />Stad
-            <span id=""></span>
+            <input type="checkbox" id="Auckland" value="Auckland" name="New Zealand city"/>Auckland
           </label>
+
           <label class="containerStad">
-            <input type="checkbox" />Stad
-            <span id=""></span>
+            <input type="checkbox" id="Hamilton" value="Hamilton" name="New Zealand city"/>Hamilton
           </label>
-          <label class="containerStad">
-            <input type="checkbox" />Stad
-            <span id=""></span>
-          </label>
+
+
+          <!--UKRAINE-->
           <label class="containerLand">
-            <input type="checkbox" />Land
-            <span id=""></span>
+            <input type="checkbox" id="Ukraine" value="Ukraine"/>Ukraine
+          </label>
+          <label class="containerStad">
+            <input type="checkbox" id="Kiev" value="Kiev"/>Kiev
           </label>
           <label class="containerStad">
             <input type="checkbox" />Stad
-            <span id=""></span>
           </label>
           <label class="containerStad">
             <input type="checkbox" />Stad
-            <span id=""></span>
-          </label>
-          <label class="containerStad">
-            <input type="checkbox" />Stad
-            <span id=""></span>
           </label>
           <label class="containerLand">
             <input type="checkbox" />Land
-            <span id=""></span>
           </label>
           <label class="containerStad">
             <input type="checkbox" />Stad
-            <span id=""></span>
           </label>
           <label class="containerStad">
             <input type="checkbox" />Stad
-            <span id=""></span>
           </label>
           <label class="containerStad">
             <input type="checkbox" />Stad
-            <span id=""></span>
           </label>
           <label class="containerLand">
             <input type="checkbox" />Land
-            <span id=""></span>
           </label>
           <label class="containerStad">
             <input type="checkbox" />Stad
-            <span id=""></span>
           </label>
           <label class="containerStad">
             <input type="checkbox" />Stad
-            <span id=""></span>
           </label>
           <label class="containerStad">
             <input type="checkbox" />Stad
-            <span id=""></span>
           </label>
         </section>
       </section>
@@ -132,7 +133,7 @@
     </section>
 
     <section class="chartSection">
-      <canvas id="chart"></canvas>
+      <canvas id="chart" class="chart"></canvas>
     </section>
   </main>
 
