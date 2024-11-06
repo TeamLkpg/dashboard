@@ -159,14 +159,71 @@ document.getElementById('fileInput').addEventListener('change', function(event) 
 
 const hamiltonData = new Map();
 const aucklandData = new Map();
+const kievData = new Map();
+const lvovData = new Map();
+const odessaData = new Map();
+const brasiliaData = new Map();
+const canoasData = new Map();
+const capeTownData = new Map();
+const johannesburgData = new Map();
+const parisData = new Map();
+const marseilleData = new Map();
+const stockholmData = new Map();
+const uppsalaData = new Map();
+const tokyoData = new Map();
+const tottoriData = new Map();
+const warsawData = new Map();
+const wroclawData = new Map();
 
-const newZealandData = [hamiltonData, aucklandData];
+
+const countryArray = ["New Zealand", "New Zealand", 
+                      "Ukraine", "Ukraine", "Ukraine", 
+                      "Brazil", "Brazil", 
+                      "South Africa", "South Africa",
+                      "France", "France",
+                      "Sweden", "Sweden",
+                      "Japan", "Japan",
+                      "Poland", "Poland"];
+
+const cityArray =   ["Hamilton", "Auckland", 
+                      "Kiev", "Lvov", "Odessa", 
+                      "Brasília", "Canoas", 
+                      "Cape Town", "Johannesburg",
+                      "Paris", "Marseille",
+                      "Stockholm", "Uppsala",
+                      "Tokyo", "Tottori",
+                      "Warsaw", "Wroclaw"];
+                    
+const dataArray =   [hamiltonData, aucklandData, 
+                      kievData, lvovData, odessaData, 
+                      brasiliaData, canoasData, 
+                      capeTownData, johannesburgData,
+                      parisData, marseilleData,
+                      stockholmData, uppsalaData,
+                      tokyoData, tottoriData,
+                      warsawData, wroclawData];
+
+
+
+var selectionLocations = [];  //array of cities selected
+var selectionTime = [];       //min to max
+
+var datasets = [];            
 
 const response2 = fetch("tmp2.csv")
     .then((response2) => response2.text())
     .then((response2) => papaParseJsonMap(response2))
     .then((response2) => createChart2(hamiltonData));
    
+
+function setDataset(selectionLocations) {
+  for (let i = 0; i < cityArray.length; i++) {
+    if (city[i] == selectionLocations) {
+      datasets.push(dataArray[i]);
+    }
+  }
+  datasets.push(datas);
+}
 
 function papaParseJsonMap(tmpCsvData) {
   Papa.parse(tmpCsvData, {
@@ -187,6 +244,7 @@ function papaParseJsonMap(tmpCsvData) {
           );
         }
       }
+      console.log(results.data[0].Country);
     },
   });
 }
@@ -221,7 +279,7 @@ function createChart2(input) {
 
 //Script for checkboxes
 //For now it's only New Zealand, is it possible to make it dynamic?
-
+/*
 const NZcheckbox = document.getElementById("New Zealand");
 
 const NZTowncheckboxes = [
@@ -250,8 +308,69 @@ NZTowncheckboxes.forEach((checkbox) => {
     }
   });
 });
-
+*/
 //End script for checkboxes
+
+
 function toggleShow() {
   document.getElementById("hiddenCalendar").classList.toggle("show");
 }
+
+let labelArray = [];
+
+function createDynamicCheckbox(){
+  const locationBox = document.getElementById('checkLocationBox');
+ 
+  
+
+  let lastCountry = "start";
+  for(let i = 0; i < countryArray.length; i++){
+    let myLabel = document.createElement('label');
+    let myCheckbox = document.createElement('input');
+    myCheckbox.type = 'checkbox';
+
+    let currentCountry = countryArray[i];
+
+    if (currentCountry != lastCountry){
+      let myCountryLabel = document.createElement('label');
+      let myCountryCheckbox = document.createElement('input');
+      myCountryCheckbox.type = 'checkbox'
+      console.log("")
+      console.log(currentCountry + " " + i)
+      myCountryLabel.className = 'containerLand';
+      myCountryCheckbox.id = currentCountry;
+      myCountryCheckbox.value = currentCountry;
+      myCountryLabel.appendChild(myCountryCheckbox);
+      myCountryLabel.innerHTML += countryArray[i];
+      labelArray.push(myCountryLabel);
+      lastCountry = currentCountry;
+
+    }
+    
+    console.log(cityArray[i] + " " + i)
+    myLabel.className = 'containerStad';
+    myCheckbox.id = cityArray[i];
+    myCheckbox.value = cityArray[i];
+    
+    myLabel.appendChild(myCheckbox);
+    myLabel.innerHTML += cityArray[i];
+    labelArray.push(myLabel);
+    
+
+    
+  }
+  
+  labelArray.forEach((checkbox) =>{
+    locationBox.appendChild(checkbox);
+  });
+}
+
+  
+createDynamicCheckbox();
+
+/*
+const countryArray = ["New Zealand", "New Zealand"];
+const cityArray = ["Hamilton", "Auckland"];
+const dataArray = [hamiltonData, aucklandData];
+*/
+
