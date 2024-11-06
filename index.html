@@ -28,28 +28,37 @@
     <section class="sortingSection">
       <section class="sortingTime">
         <h3 class="sortingHeader">Timespan</h3>
-        <label>
-          REPLACE THIS, ask Oskar
-          <input type="number" id="startTime" placeholder="1850">
-        </label>
-        <label>
-          REPLACE THIS, ask Oskar
-          <input type="number" id="endTime" placeholder="2020">
-        </label>
-        <button onclick="toggleShow()" alt="Klick to choose begining and end to select what span to take a closer look at">
-          Improve this?</button>
-          <section id="hiddenCalendar" class="dropdown-calendar">
-            <section>
-              <label>
-                Time to start at (min 1850):
-                <input type="number" id="startTime" placeholder="1850">
-              </label>
-              <label>
-                Time to end at (max 2020):
-                <input type="number" id="endTime" placeholder="2020">
-              </label>
-            </section>
+        <p>Choose the year span to take a closer look at:</p>
+        <!--Timespan slider-->
+        <section class="range-container">
+          <div class="range-slider">
+            <input type="range" id="lower" min="1850" max="2020" value="1870" aria-label="Lower range value">
+            <input type="range" id="upper" min="1850" max="2020" value="2000" aria-label="Upper range value">
+            <span class="track"></span>
+            <span class="range" id="range"></span>
+          </div>
+          <div class="slider-value">
+            <output for="lower" id="lower-value">Min: 1850</output>
+            <output for="upper" id="upper-value">Max: 2020</output>
+          </div>
+        </section>
+        <!--Timespan slider-->
+        <p>Current chosen year span: <span id="display-low-value">1870</span> - <span id="display-high-value">2000</span></p>
+        <button onclick="toggleShow()"
+          alt="Klick to choose begining and end to select what span to take a closer look at">
+          Or write your wanted year span:</button>
+        <section id="hiddenCalendar" class="dropdown-calendar">
+          <section>
+            <label>
+              Time to start at (min 1850):
+              <input type="number" id="startTime" placeholder="X">
+            </label>
+            <label>
+              Time to end at (max 2020):
+              <input type="number" id="endTime" placeholder="Y">
+            </label>
           </section>
+        </section>
       </section>
 
       <section class="sortingLocation">
@@ -58,7 +67,7 @@
 
           <!--SWEDEN-->
           <label class="containerLand">
-            <input type="checkbox"/>Sweden
+            <input type="checkbox" />Sweden
           </label>
 
           <label class="containerStad">
@@ -75,24 +84,24 @@
 
           <!--NEW ZEALAND-->
           <label class="containerLand">
-            <input type="checkbox" id="New Zealand" value="New Zealand" name="New Zealand"/>New Zealand
+            <input type="checkbox" id="New Zealand" value="New Zealand" name="New Zealand" />New Zealand
           </label>
 
           <label class="containerStad">
-            <input type="checkbox" id="Auckland" value="Auckland" name="New Zealand city"/>Auckland
+            <input type="checkbox" id="Auckland" value="Auckland" name="New Zealand city" />Auckland
           </label>
 
           <label class="containerStad">
-            <input type="checkbox" id="Hamilton" value="Hamilton" name="New Zealand city"/>Hamilton
+            <input type="checkbox" id="Hamilton" value="Hamilton" name="New Zealand city" />Hamilton
           </label>
 
 
           <!--UKRAINE-->
           <label class="containerLand">
-            <input type="checkbox" id="Ukraine" value="Ukraine"/>Ukraine
+            <input type="checkbox" id="Ukraine" value="Ukraine" />Ukraine
           </label>
           <label class="containerStad">
-            <input type="checkbox" id="Kiev" value="Kiev"/>Kiev
+            <input type="checkbox" id="Kiev" value="Kiev" />Kiev
           </label>
           <label class="containerStad">
             <input type="checkbox" />Stad

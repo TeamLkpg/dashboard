@@ -253,5 +253,53 @@ NZTowncheckboxes.forEach((checkbox) => {
 
 //End script for checkboxes
 function toggleShow() {
-  document.getElementById("hiddenCalendar").classList.toggle("show");
+  const dropdown = document.getElementById("hiddenCalendar");
+  const button = event.target; 
+
+  dropdown.classList.toggle("show");
+
+  const rect = button.getBoundingClientRect();
+
+  dropdown.style.top = `${rect.bottom + window.scrollY}px`;
+  dropdown.style.left = `${rect.left + window.scrollX}px`;
 }
+
+//Timespan Slider
+const startTimeInput = document.getElementById('startTime');
+const endTimeInput = document.getElementById('endTime');
+const displayLowTimeValue = document.getElementById('display-low-value');
+const displayHighTimeValue = document.getElementById('display-high-value');
+const lowerSlider = document.getElementById('lower');
+const upperSlider = document.getElementById('upper');
+
+function updateYearSpan(){
+    const startValue = startTimeInput.value || "1870";
+    const endValue = endTimeInput.value || "2000";
+
+    if(1850 <= startValue && startValue <= 2020){
+      displayLowTimeValue.textContent = startValue;
+      lowerSlider.value = startValue;
+    }
+    if(1850 <= endValue && endValue <= 2020){
+      displayHighTimeValue.textContent = endValue;
+      upperSlider.value = endValue;
+    }
+}
+
+function updateSliderValues(){
+  const startValue = parseInt(lowerSlider.value);
+  const endValue = parseInt(upperSlider.value);
+
+  if(startValue <= endValue){
+    displayLowTimeValue.textContent = startValue;
+    displayHighTimeValue.textContent = endValue;
+
+    lowerSlider.value = startValue;
+    upperSlider.value = endValue;
+  }
+}
+
+startTimeInput.addEventListener('input', updateYearSpan);
+endTimeInput.addEventListener('input', updateYearSpan);
+lowerSlider.addEventListener('input', updateSliderValues);
+upperSlider.addEventListener('input', updateSliderValues);
