@@ -1,92 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Document</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="style.css" />
-  <title>Document</title>
-</head>
-
-<body>
-  <!---
+  <body>
+    <!---
     <input type="file" id="fileInput" accept=".csv" />
     <pre id="output"></pre>
     --->
-  <header>
-    <h1>RUBRIK</h1>
-    <nav>
-      <ul>
-        <li><button href="#"><strong>LINK</strong></button></li>
-        <li><button href="#"><strong>LINK</strong></button></li>
-        <li><button href="#"><strong>LINK</strong></button></li>
-      </ul>
-    </nav>
-  </header>
+    <header>
+      <h1>Historical weaher person</h1>
+    </header>
 
-  <main>
-    <section class="sortingSection">
-      <section class="sortingTime">
-        <h3 class="sortingHeader">Timespan</h3>
-        <p>Choose the year span to take a closer look at:</p>
-        <!--Timespan slider-->
-        <section class="range-container">
-          <div class="range-slider">
-            <input type="range" id="lower" min="1850" max="2020" value="1870" aria-label="Lower range value">
-            <input type="range" id="upper" min="1850" max="2020" value="2000" aria-label="Upper range value">
-            <span class="track"></span>
-            <span class="range" id="range"></span>
-          </div>
-          <div class="slider-value">
-            <output for="lower" id="lower-value">Min: 1850</output>
-            <output for="upper" id="upper-value">Max: 2020</output>
-          </div>
-        </section>
-        <!--Timespan slider-->
-        <p>Current chosen year span: <span id="display-low-value">1870</span> - <span id="display-high-value">2000</span></p>
-        <button onclick="toggleShow()"
-          alt="Klick to choose begining and end to select what span to take a closer look at">
-          Or write your wanted year span:</button>
-        <section id="hiddenCalendar" class="dropdown-calendar">
-          <section>
-            <label>
-              Time to start at (min 1850):
-              <input type="number" id="startTime" placeholder="X">
-            </label>
-            <label>
-              Time to end at (max 2020):
-              <input type="number" id="endTime" placeholder="Y">
-            </label>
+    <main>
+      <section class="sortingSection">
+        <section class="sortingTime">
+          <h3 class="sortingHeader">Timespan - Year</h3>
+          <!--Timespan slider-->
+          <section class="range-container">
+            <div class="range-slider">
+              <input
+                type="range"
+                id="lower"
+                min="1850"
+                max="2020"
+                value="1870"
+                aria-label="Lower range value"
+              />
+              <input
+                type="range"
+                id="upper"
+                min="1850"
+                max="2020"
+                value="2000"
+                aria-label="Upper range value"
+              />
+              <span class="track"></span>
+              <span class="range" id="range"></span>
+            </div>
+            <div class="slider-value">
+              <output for="lower" id="lower-value"
+                ><span id="display-low-value">1870</span></output
+              >
+              <output for="upper" id="upper-value"
+                ><span id="display-high-value">2000</span></output
+              >
+            </div>
+          </section>
+          <!--Timespan slider-->
+          <button
+            onclick="toggleShow()"
+            alt="Klick to choose begining and end to select what span to take a closer look at"
+          >
+            Or write your wanted year span:
+          </button>
+          <section id="hiddenCalendar" class="dropdown-calendar">
+            <section>
+              <label>
+                Time to start at (min 1850):
+                <input type="number" id="startTime" placeholder="X" />
+              </label>
+              <label>
+                Time to end at (max 2020):
+                <input type="number" id="endTime" placeholder="Y" />
+              </label>
+            </section>
           </section>
         </section>
-      </section>
 
-      <section class="sortingLocation">
-        <h3 class="sortingHeader">Location</h3>
-        <section class="checkLocationBox" id="checkLocationBox">
-
+        <section class="sortingLocation">
+          <h3 class="sortingHeader">Location</h3>
+          <section class="checkLocationBox" id="checkLocationBox"></section>
         </section>
-      </section>
 
+        <!--
+      NOT IN USE
       <section class="sortingType">
         <h3 class="sortingHeader">Special selection</h3>
+      </section>-->
       </section>
-    </section>
 
-    <section class="chartSection">
-      <canvas id="chart" class="chart"></canvas>
-    </section>
-  </main>
+      <section class="chartSection">
+        <canvas id="chart" class="chart"></canvas>
+      </section>
+    </main>
 
-  <footer>
-    <p>INFO STUFF</p>
+    <footer>
+      <section class="footerCreatedby">
+        <p>Created by:</p>
+        <ol>
+          <ul>
+            Oskar Jonsson
+          </ul>
+          <ul>
+            Johanna Laidla
+          </ul>
+        </ol>
+        <ol>
+          <ul>
+            Philip Jonsson
+          </ul>
+          <ul>
+            Billy Eklund
+          </ul>
+        </ol>
+      </section>
 
-    <p></p>
-  </footer>
+      <section class="footerGitHub">
+        <p>Github</p>
+        <img src="images/"
+      </section>
+    </footer>
 
-  <script src="PapaParse-5.0.2/PapaParse-5.0.2/papaparse.js"></script>
-  <script src="chart.js"></script>
-  <script src="script.js"></script>
-</body>
-
+    <script src="PapaParse-5.0.2/PapaParse-5.0.2/papaparse.js"></script>
+    <script src="chart.js"></script>
+    <script src="script.js"></script>
+  </body>
 </html>

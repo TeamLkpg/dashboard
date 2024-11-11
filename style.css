@@ -6,7 +6,7 @@
   --accent-color-secondary: #adadff;
   --text-color-dark: #000000;
   --text-color-light: #ffffff;
-  --section-sorting-height: 25vh;
+  --section-sorting-height: 38vh;
   --section-sorting-width: 30vw;
   --section-sorting-border-radius: 10%;
   --section-border: 2px solid black;
@@ -196,13 +196,28 @@ footer {
   display: flex;
   display: row;
   justify-content: space-between;
-
   height: 8vh;
 
   background-color: var(--accent-color-main);
 }
 
 footer p {}
+
+.footerCreatedby{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.footerCreatedby ol ul{
+  font-size: small;
+}
+
+
+
+.footerGitHub{
+  display: flex;
+}
 
 .hidden {
   display: none;
