@@ -7,7 +7,7 @@
   --text-color-dark: #000000;
   --text-color-light: #ffffff;
   --section-sorting-height: 38vh;
-  --section-sorting-width: 30vw;
+  --section-sorting-width: 20vw;
   --section-sorting-border-radius: 10%;
   --section-border: 2px solid black;
 }
@@ -182,7 +182,7 @@ main {
 .chartSection {
   background-color: lightgray;
   border-radius: 5em;
-  width: 70vw;
+  width: 80vw;
   height: 80vh;
 }
 
@@ -197,11 +197,10 @@ footer {
   display: row;
   justify-content: space-between;
   height: 8vh;
+  margin: 0 2vw;
 
   background-color: var(--accent-color-main);
 }
-
-footer p {}
 
 .footerCreatedby{
   display: flex;
@@ -213,10 +212,15 @@ footer p {}
   font-size: small;
 }
 
-
-
 .footerGitHub{
   display: flex;
+}
+
+.footerGitHub img{
+  height: 4vh;
+  width: 4vw;
+  justify-self: center;
+  align-self: center;
 }
 
 .hidden {
