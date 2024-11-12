@@ -72,24 +72,23 @@ var datasets = [];
 var datasetsCity = [];
 
 const graphColors = [
-  "#FF5733", // Red-Orange
-  
-  "#3357FF", // Blue
-  "#FF33A6", // Pink
-  "#FFD700", // Gold
-  "#4B0082", // Indigo
-  "#FF6347", // Tomato
-  "#40E0D0", // Turquoise
-  "#FF1493", // Deep Pink
-  "#20B2AA", // Light Sea Green
-  "#FFD700", // Gold
-  "#8A2BE2", // Blue Violet
-  "#A52A2A", // Brown
-  "#7FFF00", // Chartreuse
-  "#D2691E", // Chocolate
-  "#6495ED", // Cornflower Blue
-  "#FF4500",  // Orange Red
-  "#33FF57" // Green
+  "#FF0000",  // Red
+  "#0000FF",  // Blue
+  "#00FF00",  // Lime
+  "#FFFF00",  // Yellow
+  "#FF00FF",  // Magenta
+  "#00FFFF",  // Cyan
+  "#8B0000",  // Dark Red
+  "#000080",  // Navy
+  "#008000",  // Green
+  "#FFD700",  // Gold
+  "#800080",  // Purple
+  "#FF6347",  // Tomato
+  "#FF1493",  // Deep Pink
+  "#8A2BE2",  // Blue Violet
+  "#D2691E",  // Chocolate
+  "#A52A2A",  // Brown
+  "#4B0082"   // Indigo
 ];
 
 //Fetch data from csv
