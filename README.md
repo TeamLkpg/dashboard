@@ -1,4 +1,8 @@
-`function parse`
+Description of the functions, variables and constants in script.js
+
+functions:
+
+`parse`
 This function parses CSV data using Papa.parse. For each row, it checks if city matches an entry in cityArray. If a match is found, it converts the temperature from Fahrenheit to Celsius and saves it in an array.
 
 `setDataset`

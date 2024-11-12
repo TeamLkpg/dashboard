@@ -218,6 +218,8 @@ function updateSelection() {
   });
   if (selectionLocations.length != 0) {
     myChart.data.labels = Array.from(datasets[0].keys());
+  } else {
+    myChart.data.labels = [];
   }
   myChart.update();
 }

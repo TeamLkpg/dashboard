@@ -7,7 +7,7 @@
   --text-color-light: #ffffff;
   --section-sorting-height: 38vh;
   --section-sorting-width: 20vw;
-  --section-sorting-border-radius: 2%;
+  --section-sorting-border-radius: 3px;
   --section-border: 2px solid black;
 }
 
@@ -90,7 +90,7 @@ main {
 .sortingSection {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-evenly;
   align-items: center;
   width: var(--section-sorting-width);
   height: 80vh;
@@ -174,6 +174,7 @@ main {
 .range-slider {
   width: 90%;
   position: relative;
+  margin-top: 2vh;
 }
 
 .range-slider input[type="range"] {
@@ -189,7 +190,7 @@ main {
   appearance: none;
   width: 15px;
   height: 15px;
-  background: #cc6c1d;
+  background: var(--accent-color-main);
   border-radius: 50%;
   cursor: pointer;
   pointer-events: all;
@@ -200,7 +201,7 @@ main {
 .range-slider .track {
   position: absolute;
   height: 5px;
-  background: #971515;
+  background: var(--accent-color-secondary);
   border-radius: 5px;
   margin-left: 6px;
   top: 50%;
@@ -221,7 +222,7 @@ main {
 .slider-value {
   display: flex;
   justify-content: space-between;
-  margin-top: 5vh;
+  margin-top: 8vh;
 }
 
 /*Dropdown calendar*/
@@ -252,9 +253,14 @@ main {
 
 .dropdown-calendar section {
   display: flex;
-  justify-content: space-evenly;
+  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
-  padding: 0 1vw;
+
+  height:15vh;
+  width: 15vw;
+  padding: 1vh 1vw;
+
   border: 2px solid #999;
   width: calc(var(--section-sorting-width) / 1.7);
   height: calc(var(--section-sorting-height) / 2);
@@ -268,6 +274,8 @@ main {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+
+  height: 14vh;
 }
 
 .dropdown-calendar section input {
@@ -289,11 +297,13 @@ main {
 .sortingLocation p{
   font-size: 0.8em;
   color: var(--text-color-dark);
-  background-color: var(--accent-color-secondary);
+  text-align: center;
+  
   width: 100%;
   padding: 0.5vh 0;
   margin: 0;
-  text-align: center;
+ 
+  background-color: var(--accent-color-secondary);
 }
 
 .checkLocationBox {
@@ -364,11 +374,16 @@ footer {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-right: 5vw;
 }
 
 .footerGitHub img{
-  height: 4vw;
-  width: 4vw;
+  height: 4vh;
+  width: 4vh;
   justify-self: center;
   align-self: center;
+}
+
+.footerGitHub img:hover{
+  box-shadow: 0 0px 20px rgba(0, 0, 0, 0.8);
 }
