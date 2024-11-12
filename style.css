@@ -57,11 +57,12 @@ header ul li {
   align-items: center;
 
   height: 5vh;
-  width: 10vw;
+  width: 12vw;
 
   list-style-type: none;
   cursor: pointer;
   background-color: var(--accent-color-secondary);
+  border-radius: 2px;
 }
 
 header ul li a{
@@ -69,7 +70,7 @@ header ul li a{
   color: var(--text-color-light);
 }
 header ul li:hover{
-  border:#000000 2px solid;
+  box-shadow: 0 0px 20px rgba(0, 0, 0, 0.8);
 }
 
 /*MAIN*/
@@ -234,6 +235,10 @@ main {
   color: var(--text-color-light);
   border-radius: 0.5em;
   cursor: pointer;
+}
+
+.sortingTime button:hover {
+  box-shadow: 0 0px 20px rgba(0, 0, 0, 0.8);
 }
 
 .dropdown-calendar {
