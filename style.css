@@ -1,8 +1,7 @@
 :root {
   --background-color: #f0f0f0;
-  --accent-color-main: #4f578d;
-  --accent-color-secondary: #adadff;
-  --accent-color-tertiary: #4d4d70;
+  --accent-color-main: #061a3f;
+  --accent-color-secondary: #a19fc4;
   --text-color-dark: #000000;
   --text-color-light: #ffffff;
   --section-sorting-height: 38vh;
@@ -70,7 +69,7 @@ header ul li a{
   color: var(--text-color-light);
 }
 header ul li:hover{
-  box-shadow: 0 0px 20px rgba(0, 0, 0, 0.8);
+  box-shadow: 0 0px 10px rgba(255, 255, 255, 0.8);
 }
 
 /*MAIN*/
@@ -196,6 +195,9 @@ main {
   pointer-events: all;
   position: relative;
   z-index: 2;
+}
+.range-slider input[type="range"]::-webkit-slider-thumb:hover {
+  box-shadow: 0 0px 10px rgba(0, 0, 0, 0.8);
 }
 
 .range-slider .track {
@@ -357,6 +359,8 @@ footer {
   margin: 0 2vw;
 
   background-color: var(--accent-color-main);
+
+  color: var(--text-color-light);
 }
 
 .footerCreatedby{
@@ -365,8 +369,25 @@ footer {
   justify-content: space-between;
 }
 
-.footerCreatedby ol ul{
-  font-size: small;
+.footerCreatedby h2{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1em;
+  margin-left: 0;
+}
+
+.footerCreatedby ul{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 0.6em;
+}
+
+.footerCreatedby ul li{
+  list-style-type: none;
 }
 
 .footerGitHub{
@@ -382,8 +403,9 @@ footer {
   width: 4vh;
   justify-self: center;
   align-self: center;
+  background-color: var(--accent-color-secondary);
 }
 
 .footerGitHub img:hover{
-  box-shadow: 0 0px 20px rgba(0, 0, 0, 0.8);
+  box-shadow: 0 0px 10px rgba(255, 255, 255, 0.8);
 }
