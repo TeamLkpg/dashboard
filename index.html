@@ -10,6 +10,11 @@
   <body>
     <header>
       <h1>Historical temperature data</h1>
+      <nav>
+        <ul>
+          <li><a href="temperature.csv">Download data</a></li>
+        </ul>
+      </nav>
     </header>
 
     <main>
@@ -17,6 +22,7 @@
         <section class="sortingTime">
           <h3 class="sortingHeader">Timespan - Year</h3>
           <!--Timespan slider-->
+          <p>Choose a timespan on the sliders:</p>
           <section class="range-container">
             <div class="range-slider">
               <input
@@ -50,9 +56,9 @@
           <!--Timespan slider-->
           <button
             onclick="toggleShow()"
-            alt="Klick to choose begining and end to select what span to take a closer look at"
+            alt="Click to choose begining and end to select what span to take a closer look at"
           >
-            Or write your wanted year span:
+            Or select your desired time span by clicking here:
           </button>
           <section id="hiddenCalendar" class="dropdown-calendar">
             <section>
@@ -70,6 +76,7 @@
 
         <section class="sortingLocation">
           <h3 class="sortingHeader">Location</h3>
+          <p>Choose one or several locations</p>
           <section class="checkLocationBox" id="checkLocationBox"></section>
         </section>
       </section>
@@ -101,8 +108,7 @@
       </section>
 
       <section class="footerGitHub">
-        <p><a href="" style="text-decoration: none";>Github</a></p>
-        <img src="images/github_image_transparent_bg.png">
+        <a href="https://github.com/TeamLkpg/dashboard" style="text-decoration: none";><img src="images/github.svg"></a>
       </section>
     </footer>
 

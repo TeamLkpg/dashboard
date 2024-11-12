@@ -1,5 +1,6 @@
+//Chart
 const ctx = document.getElementById("chart");
-
+let myChart;
 
 //Timespan Slider values
 const startTimeInput = document.getElementById("startTime");
@@ -9,7 +10,7 @@ const displayHighTimeValue = document.getElementById("display-high-value");
 const lowerSlider = document.getElementById("lower");
 const upperSlider = document.getElementById("upper");
 
-/*Testar map*/
+//Data for the cities
 
 const hamiltonData = new Map();
 const aucklandData = new Map();
@@ -62,21 +63,50 @@ const dataArray = [
   warsawData, wroclawData,
 ];
 
-var selectionLocations = ["Hamilton"]; //array of cities selected
-var selectionTime = [parseInt(lowerSlider.value), parseInt(upperSlider.value)]; //min to map
-var selection = [];
+//Selection variables
+
+var selectionLocations = ["Hamilton"];
+var selectionTime = [parseInt(lowerSlider.value), parseInt(upperSlider.value)];
 
 var datasets = [];
 var datasetsCity = [];
 
+const graphColors = [
+  "#FF5733", // Red-Orange
+  
+  "#3357FF", // Blue
+  "#FF33A6", // Pink
+  "#FFD700", // Gold
+  "#4B0082", // Indigo
+  "#FF6347", // Tomato
+  "#40E0D0", // Turquoise
+  "#FF1493", // Deep Pink
+  "#20B2AA", // Light Sea Green
+  "#FFD700", // Gold
+  "#8A2BE2", // Blue Violet
+  "#A52A2A", // Brown
+  "#7FFF00", // Chartreuse
+  "#D2691E", // Chocolate
+  "#6495ED", // Cornflower Blue
+  "#FF4500",  // Orange Red
+  "#33FF57" // Green
+];
+
+//Fetch data from csv
+
 const response2 = fetch("temperature.csv")
   .then((response2) => response2.text())
-  .then((response2) => papaParseJsonMap(response2))
+  .then((response2) => parse(response2))
   .then((response2) => setDataset())
-  .then((response2) => createChartForMaps(datasets));
+  .then((response2) => createChart(datasets));
 
+  createCheckboxes();
+  linkCheckboxes();
+  setLocationCheckboxesEventListener();
 
-function papaParseJsonMap(tmpCsvData) {
+//Parse the csv data into a maps
+
+function parse(tmpCsvData) {
   Papa.parse(tmpCsvData, {
     header: true,
     complete: function (results) {
@@ -94,6 +124,8 @@ function papaParseJsonMap(tmpCsvData) {
     },
   });
 }
+
+//Set the dataset for the chart
 
 function setDataset() {
   datasets = [];
@@ -116,29 +148,9 @@ function setDataset() {
   }
 }
 
-let myChart;
+//Create the chart
 
-const graphColors = [
-  "#FF5733", // Red-Orange
-  "#33FF57", // Green
-  "#3357FF", // Blue
-  "#FF33A6", // Pink
-  "#FFD700", // Gold
-  "#4B0082", // Indigo
-  "#FF6347", // Tomato
-  "#40E0D0", // Turquoise
-  "#FF1493", // Deep Pink
-  "#20B2AA", // Light Sea Green
-  "#FFD700", // Gold
-  "#8A2BE2", // Blue Violet
-  "#A52A2A", // Brown
-  "#7FFF00", // Chartreuse
-  "#D2691E", // Chocolate
-  "#6495ED", // Cornflower Blue
-  "#FF4500"  // Orange Red
-];
-
-function createChartForMaps(input) { //Update this function name
+function createChart(input) {
   if(selectionLocations.length == 0){
     return;
   }
@@ -156,8 +168,6 @@ function createChartForMaps(input) { //Update this function name
       pointRadius: null,
     }
   });
-
-  console.log(labels);
 
    myChart = new Chart(ctx, {
     type: "line",
@@ -186,6 +196,35 @@ function createChartForMaps(input) { //Update this function name
   });
 }
 
+//Update the chart with the new selection
+
+function updateSelection() {
+  if(selectionLocations.length == 0){
+    return;
+  }
+  myChart.data.datasets = [];
+  myChart.labels = [];
+  setDataset();
+
+  datasets.forEach((element, index) => {
+    const dataset = {
+      label: datasetsCity[index],
+      data: Array.from(element.values()),
+      backgroundColor: graphColors[index % graphColors.length],
+      borderColor: graphColors[index % graphColors.length],
+      borderWidth: 1,
+      tension: 0.1,
+      pointRadius: null,
+    };
+    myChart.data.datasets.push(dataset);
+  });
+  myChart.data.labels = Array.from(datasets[0].keys());
+  console.log(myChart.labels);
+  myChart.update();
+}
+
+//Script for dropdown in time selection
+
 function toggleShow() {
   const dropdown = document.getElementById("hiddenCalendar");
   const button = event.target;
@@ -198,7 +237,9 @@ function toggleShow() {
   dropdown.style.left = `${rect.left + window.scrollX }px`;
 }
 
-function createCheckboxDynamic() {
+//Create checkboxes
+
+function createCheckboxes() {
   let labelArray = [];
   const locationBox = document.getElementById("checkLocationBox");
 
@@ -236,9 +277,7 @@ function createCheckboxDynamic() {
   });
 }
 
-createCheckboxDynamic();
-
-//Script for linking checkboxes
+//Linking checkboxes
 
 function linkCheckboxes() {
   const countryCitiesLink = [];
@@ -274,7 +313,7 @@ function linkCheckboxes() {
   });
 }
 
-linkCheckboxes();
+//Timespan selection
 
 function updateYearSpan() {
   const startValue = startTimeInput.value || "1870";
@@ -284,13 +323,16 @@ function updateYearSpan() {
     displayLowTimeValue.textContent = startValue;
     lowerSlider.value = startValue;
     selectionTime = [lowerSlider.value, upperSlider.value];
+    selectionTime = [parseInt(lowerSlider.value), parseInt(upperSlider.value)];
+    updateSelection();
   }
   if (1850 <= endValue && endValue <= 2020) {
     displayHighTimeValue.textContent = endValue;
     upperSlider.value = endValue;
     selectionTime = [lowerSlider.value, upperSlider.value];
+    selectionTime = [parseInt(lowerSlider.value), parseInt(upperSlider.value)];
+    updateSelection();
   }
- 
 }
 
 function updateSliderValues() {
@@ -304,32 +346,8 @@ function updateSliderValues() {
     lowerSlider.value = startValue;
     upperSlider.value = endValue;
     selectionTime = [parseInt(lowerSlider.value), parseInt(upperSlider.value)];
+    updateSelection();
   }
-  updateSelection();
-}
-
-function updateSelection() {
-  myChart.data.datasets = [];
-  myChart.labels = [];
-  setDataset();
-
-  // Push each dataset individually into myChart.data.datasets
-  datasets.forEach((element, index) => {
-    // Create the dataset object for each city
-    const dataset = {
-      label: datasetsCity[index],  // City name
-      data: Array.from(element.values()),  // Convert the Map's values into an array of data points
-      backgroundColor: graphColors[index % graphColors.length],  // Cycle through colors
-      borderColor: graphColors[index % graphColors.length],  // Same color for border
-      borderWidth: 1,
-      tension: 0.1,  // Line tension (for smooth curves)
-      pointRadius: null,  // Optional: Remove data points
-    };
-    myChart.data.datasets.push(dataset);
-  });
-  myChart.data.labels = Array.from(datasets[0].keys());
-  console.log(myChart.labels);
-  myChart.update();
 }
 
 startTimeInput.addEventListener("input", updateYearSpan);
@@ -337,8 +355,9 @@ endTimeInput.addEventListener("input", updateYearSpan);
 lowerSlider.addEventListener("input", updateSliderValues);
 upperSlider.addEventListener("input", updateSliderValues);
 
+//Location selection
 
-function setLocationEventListener() {
+function setLocationCheckboxesEventListener() {
   const cityCheckboxes = document.querySelectorAll("#checkLocationBox input");
   
   cityCheckboxes.forEach(checkbox => {
@@ -349,8 +368,6 @@ function setLocationEventListener() {
     );
   });
 }
-
-setLocationEventListener();
 
 function setLocationSelection() {
   selectionLocations = [];
