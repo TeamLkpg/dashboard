@@ -65,7 +65,7 @@ const dataArray = [
 
 //Selection variables
 
-var selectionLocations = ["Hamilton"];
+var selectionLocations = [];
 var selectionTime = [parseInt(lowerSlider.value), parseInt(upperSlider.value)];
 
 var datasets = [];
@@ -151,11 +151,12 @@ function setDataset() {
 //Create the chart
 
 function createChart(input) {
-  if(selectionLocations.length == 0){
-    return;
+  var labels = [];
+  if(selectionLocations.length != 0){
+    labels = Array.from(input[0].keys());
   }
+
   let i = -1;
-  const labels = Array.from(input[0].keys());
   var data = input.map((element) => {
     i++;
     return{
@@ -199,9 +200,6 @@ function createChart(input) {
 //Update the chart with the new selection
 
 function updateSelection() {
-  if(selectionLocations.length == 0){
-    return;
-  }
   myChart.data.datasets = [];
   myChart.labels = [];
   setDataset();
@@ -218,8 +216,9 @@ function updateSelection() {
     };
     myChart.data.datasets.push(dataset);
   });
-  myChart.data.labels = Array.from(datasets[0].keys());
-  console.log(myChart.labels);
+  if (selectionLocations.length != 0) {
+    myChart.data.labels = Array.from(datasets[0].keys());
+  }
   myChart.update();
 }
 
