@@ -8,12 +8,8 @@
   </head>
 
   <body>
-    <!---
-    <input type="file" id="fileInput" accept=".csv" />
-    <pre id="output"></pre>
-    --->
     <header>
-      <h1>Historical weaher person</h1>
+      <h1>Historical temperature data</h1>
     </header>
 
     <main>
@@ -28,7 +24,7 @@
                 id="lower"
                 min="1850"
                 max="2020"
-                value="1870"
+                value="1850"
                 aria-label="Lower range value"
               />
               <input
@@ -36,19 +32,19 @@
                 id="upper"
                 min="1850"
                 max="2020"
-                value="2000"
+                value="2020"
                 aria-label="Upper range value"
               />
               <span class="track"></span>
               <span class="range" id="range"></span>
             </div>
             <div class="slider-value">
-              <output for="lower" id="lower-value"
-                ><span id="display-low-value">1870</span></output
-              >
-              <output for="upper" id="upper-value"
-                ><span id="display-high-value">2000</span></output
-              >
+              <output for="lower" id="lower-value">
+                <span id="display-low-value">1850</span>
+              </output>
+              <output for="upper" id="upper-value">
+                <span id="display-high-value">2020</span>
+              </output>
             </div>
           </section>
           <!--Timespan slider-->
@@ -76,12 +72,6 @@
           <h3 class="sortingHeader">Location</h3>
           <section class="checkLocationBox" id="checkLocationBox"></section>
         </section>
-
-        <!--
-      NOT IN USE
-      <section class="sortingType">
-        <h3 class="sortingHeader">Special selection</h3>
-      </section>-->
       </section>
 
       <section class="chartSection">

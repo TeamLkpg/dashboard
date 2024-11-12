@@ -62,7 +62,7 @@ const dataArray = [
   warsawData, wroclawData,
 ];
 
-var selectionLocations = ["Hamilton", "Auckland"]; //array of cities selected
+var selectionLocations = ["Hamilton"]; //array of cities selected
 var selectionTime = [parseInt(lowerSlider.value), parseInt(upperSlider.value)]; //min to map
 var selection = [];
 
@@ -83,10 +83,10 @@ function papaParseJsonMap(tmpCsvData) {
       for (let i = 0; i < results.data.length; i++) {
         cityArray.forEach((city) => {
           if (results.data[i].City === city) {
-            //let AverageTemperatureCelsius = (results.data[i].AverageTemperatureFahr - 32) * 5 / 9;
+            let AverageTemperatureCelsius = (results.data[i].AverageTemperatureFahr - 32) * 5 / 9;
             dataArray[cityArray.indexOf(city)].set(
               results.data[i].year + "/" + results.data[i].month,
-              results.data[i].AverageTemperatureFahr
+              AverageTemperatureCelsius
             );
           }
         });
@@ -118,36 +118,6 @@ function setDataset() {
 
 let myChart;
 
-/*
-function createChart(input) {
-  const labels = Array.from(input.keys());
-  const data = Array.from(input.values());
-   myChart =new Chart(ctx, {
-    type: "line",
-    data: {
-      labels: labels,
-      datasets: [
-        {
-          label: "Hamilton",
-          data: data,
-          backgroundColor: "#00fff0",
-          borderColor: "#00fff0",
-          borderWidth: 1,
-          tension: 0.1,
-          pointRadius: null, 
-        }
-      ],
-    },
-    options: {
-      
-      scales: {
-        y: {
-        },
-      },
-    },
-  });
-}*/
-
 const graphColors = [
   "#FF5733", // Red-Orange
   "#33FF57", // Green
@@ -169,6 +139,9 @@ const graphColors = [
 ];
 
 function createChartForMaps(input) { //Update this function name
+  if(selectionLocations.length == 0){
+    return;
+  }
   let i = -1;
   const labels = Array.from(input[0].keys());
   var data = input.map((element) => {
@@ -186,7 +159,6 @@ function createChartForMaps(input) { //Update this function name
 
   console.log(labels);
 
-
    myChart = new Chart(ctx, {
     type: "line",
     data: {
@@ -194,13 +166,25 @@ function createChartForMaps(input) { //Update this function name
       datasets: data,
     },
     options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        x: {
+          title: {
+            display: true,
+            text: "Time",
+          },
+        },
+        y: {
+          title: {
+            display: true,
+            text: "Temperature",
+          },
+        },
+      },
     },
   });
 }
-
-
-
-//End script for checkboxes
 
 function toggleShow() {
   const dropdown = document.getElementById("hiddenCalendar");
@@ -211,12 +195,11 @@ function toggleShow() {
   const rect = button.getBoundingClientRect();
 
   dropdown.style.top = `${rect.bottom + window.scrollY}px`;
-  dropdown.style.left = `${rect.left + window.scrollX}px`;
+  dropdown.style.left = `${rect.left + window.scrollX }px`;
 }
 
-let labelArray = [];
-
-function createDynamicCheckbox() {
+function createCheckboxDynamic() {
+  let labelArray = [];
   const locationBox = document.getElementById("checkLocationBox");
 
   let lastCountry = "start";
@@ -253,7 +236,45 @@ function createDynamicCheckbox() {
   });
 }
 
-createDynamicCheckbox();
+createCheckboxDynamic();
+
+//Script for linking checkboxes
+
+function linkCheckboxes() {
+  const countryCitiesLink = [];
+
+  countryArray.forEach((country, index) => {
+    if (!countryCitiesLink[country]) {
+      countryCitiesLink[country] = [];
+    }
+    countryCitiesLink[country].push(cityArray[index]);
+  });
+
+  Object.keys(countryCitiesLink).forEach(country => {
+    const countryCheckbox = document.getElementById(country);
+    const cityCheckboxes = countryCitiesLink[country].map(city => 
+      document.getElementById(city)
+    );
+
+    countryCheckbox.addEventListener("change", function () {
+      cityCheckboxes.forEach(checkbox => {
+        checkbox.checked = countryCheckbox.checked;
+      });
+    });
+
+    cityCheckboxes.forEach(checkbox => {
+      checkbox.addEventListener("change", function () {
+        if (cityCheckboxes.every(city => city.checked)) {
+          countryCheckbox.checked = true;
+        } else {
+          countryCheckbox.checked = false;
+        }
+      });
+    });
+  });
+}
+
+linkCheckboxes();
 
 function updateYearSpan() {
   const startValue = startTimeInput.value || "1870";
@@ -284,7 +305,10 @@ function updateSliderValues() {
     upperSlider.value = endValue;
     selectionTime = [parseInt(lowerSlider.value), parseInt(upperSlider.value)];
   }
-  
+  updateSelection();
+}
+
+function updateSelection() {
   myChart.data.datasets = [];
   myChart.labels = [];
   setDataset();
@@ -314,38 +338,26 @@ lowerSlider.addEventListener("input", updateSliderValues);
 upperSlider.addEventListener("input", updateSliderValues);
 
 
-//Script for checkboxes
-
-//For now it's only New Zealand, is it possible to make it dynamic?
-const NZcheckbox = document.getElementById("New Zealand");
-
-const NZTowncheckboxes = [
-  document.getElementById("Auckland"),
-  document.getElementById("Hamilton"),
-];
-
-function linkCheckboxes(){
-
+function setLocationEventListener() {
+  const cityCheckboxes = document.querySelectorAll("#checkLocationBox input");
+  
+  cityCheckboxes.forEach(checkbox => {
+    checkbox.addEventListener("change", function () {
+      setLocationSelection();
+      updateSelection();
+    }
+    );
+  });
 }
 
-NZcheckbox.addEventListener("change", function () {
-  if (NZcheckbox.checked) {
-    NZTowncheckboxes.forEach((checkbox) => {
-      checkbox.checked = true;
-    });
-  } else {
-    NZTowncheckboxes.forEach((checkbox) => {
-      checkbox.checked = false;
-    });
-  }
-});
+setLocationEventListener();
 
-NZTowncheckboxes.forEach((checkbox) => {
-  checkbox.addEventListener("change", function () {
-    if (NZTowncheckboxes.every((checkbox) => checkbox.checked)) {
-      NZcheckbox.checked = true;
-    } else {
-      NZcheckbox.checked = false;
+function setLocationSelection() {
+  selectionLocations = [];
+  const cityCheckboxes = document.querySelectorAll("#checkLocationBox input");
+  cityCheckboxes.forEach(checkbox => {
+    if (checkbox.checked) {
+      selectionLocations.push(checkbox.value);
     }
   });
-});
+}

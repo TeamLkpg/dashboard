@@ -1,5 +1,3 @@
-/*VARIABLES*/
-
 :root {
   --background-color: #f0f0f0;
   --accent-color-main: #4f578d;
@@ -8,23 +6,18 @@
   --text-color-light: #ffffff;
   --section-sorting-height: 38vh;
   --section-sorting-width: 20vw;
-  --section-sorting-border-radius: 10%;
+  --section-sorting-border-radius: 2%;
   --section-border: 2px solid black;
 }
 
-/*GENERAL*/
 body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-
   margin: 0;
   height: 100vh;
-
   background-color: var(--accent-color-main);
 }
-
-/*HEADER*/
 
 header {
   display: flex;
@@ -40,34 +33,6 @@ header h1 {
   font-size: xx-large;
   padding-left: 3vw;
 }
-
-header nav {
-  display: flex;
-  display: row;
-  justify-content: space-between;
-  align-items: center;
-}
-
-header ul {
-  display: flex;
-  display: row;
-  justify-content: space-between;
-  align-items: center;
-
-  list-style-type: none;
-}
-
-header li {
-  padding-right: 2vw;
-}
-
-header li button {
-  padding: 1vh 1vw;
-  border-radius: var(--section-sorting-border-radius);
-  background-color: var(--accent-color-secondary);
-}
-
-/*MAIN*/
 
 main {
   display: flex;
@@ -108,8 +73,6 @@ main {
   scrollbar-color: var(--accent-color-main) var(--background-color);
   margin-top: 1vh;
 }
-
-
 
 .sortingHeader {
   width: 100%;
@@ -180,17 +143,19 @@ main {
 }
 
 .chartSection {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
   background-color: lightgray;
-  border-radius: 5em;
+  border-radius: var(--section-sorting-border-radius);
   width: 80vw;
   height: 80vh;
+  margin-right: 0.5vw;
 }
 
 .chart {
   padding: 2vh 2vw;
 }
-
-/*FOOTER*/
 
 footer {
   display: flex;
@@ -244,11 +209,14 @@ footer {
 
 .dropdown-calendar section {
   display: flex;
-  padding: 0 1vw;
   justify-content: space-evenly;
   align-items: center;
+
+  padding: 0 1vw;
+ 
   border: 2px solid #999;
-  width: calc(var(--section-sorting-width) / 2);
+
+  width: calc(var(--section-sorting-width) / 1.7);
   height: calc(var(--section-sorting-height) / 2);
   background-color: var(--background-color);
   border-bottom-left-radius: var(--section-sorting-border-radius);
@@ -261,9 +229,8 @@ footer {
 
 ¨
 
-/*
-TIMESPAN SLIDER
-*/
+/* TIMESPAN SLIDER */
+
 .range-container {
   padding: 0 0;
 }
@@ -304,6 +271,7 @@ TIMESPAN SLIDER
   height: 5px;
   background: #971515;
   border-radius: 5px;
+  margin: 0;
   top: 50%;
   transform: translateY(1.5vh);
   width: 100%;
@@ -312,7 +280,7 @@ TIMESPAN SLIDER
 .range-slider .range {
   position: absolute;
   height: 5px;
-  background: #541192;
+  background: #066a42;
   border-radius: 5px;
   top: 50%;
   transform: translateY(-50%);
