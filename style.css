@@ -124,6 +124,8 @@ main {
   margin: 0;
   text-align: center;
   font-size: 1.5em;
+
+  font-weight:normal;
   color: var(--text-color-light);
   background-color: var(--accent-color-main);
 }
@@ -232,7 +234,7 @@ main {
 .sortingTime button {
   width: calc(var(--section-sorting-width) * 0.75);
   padding: 0.8vh;
-  margin-top: 1vh;
+  margin-top: 3vh;
   font-size: 0.9em;
   background-color: var(--accent-color-main);
   color: var(--text-color-light);
