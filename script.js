@@ -1,161 +1,16 @@
+//Chart
 const ctx = document.getElementById("chart");
+let myChart;
 
-//const recordID = [];
-const month = [];
-const day = [];
-const year = [];
-const avgTempFahr = [];
-//const avgTempUncFahr = [];
-const city = [];
-//const countryID = [];
-const country = [];
-//const latitude = [];
-//const longitude = [];
-const date = [];
+//Timespan Slider values
+const startTimeInput = document.getElementById("startTime");
+const endTimeInput = document.getElementById("endTime");
+const displayLowTimeValue = document.getElementById("display-low-value");
+const displayHighTimeValue = document.getElementById("display-high-value");
+const lowerSlider = document.getElementById("lower");
+const upperSlider = document.getElementById("upper");
 
-var datasets = [];
-
-var selection = [];
-
-
-
-//WORKING CODE
-
-/*
-const response = fetch("tmp.csv")
-  .then((response) => response.text())
-  .then((response) => papaParseJson(response))
-  .then((response) => {
-    createNewData("Ukraine");
-    createNewData("New Zealand");
-    createChart(datasets);
-  });
-
-function createNewData(location) {
-  var datas = [];
-  for (let i = 0; i < country.length; i++) {
-    if (country[i] == location) {
-      data = avgTempFahr[i];
-      datas.push(data);
-    }
-  }
-  datasets.push(datas);
-}
-
-function createChart(input) {
-  new Chart(ctx, {
-    type: "line",
-    data: {
-      labels: date,
-      datasets: [
-        //Make funktion to create this instead
-        {
-          label: "Ukraine",
-          data: input[0],
-          backgroundColor: "#00fff0",
-          borderWidth: 3,
-          tension: 0.1,
-        },
-        {
-          label: "New Zealand",
-          data: input[1],
-          backgroundColor: "#002351",
-          borderWidth: 3,
-          tension: 0.1,
-        },
-      ],
-    },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true,
-        },
-      },
-    },
-  });
-}
-
-function papaParseJson(tmpCsvData) {
-  Papa.parse(tmpCsvData, {
-    header: true,
-    complete: function (results) {
-      //console.log("Finished:", results.data);
-      for (let i = 0; i < results.data.length; i++) {
-        //Kanske kan bli fel eftersom month inte är header
-        //recordID.push(results.data[i].record_id)
-        month.push(results.data[i].month);
-        day.push(results.data[i].day);
-        year.push(results.data[i].year);
-        date.push(
-          results.data[i].day +
-            "-" +
-            results.data[i].month +
-            "-" +
-            results.data[i].year
-        );
-        avgTempFahr.push(results.data[i].AverageTemperatureFahr);
-        //avgTempUncFahr.push(results.data[i].AverageTemperatureUncertaintyFahr)
-        city.push(results.data[i].City);
-        //countryID.push(results.data[i].country_id)
-        country.push(results.data[i].Country);
-        //latitude.push(results.data[i].Latitude)
-        //longitude.push(results.data[i].Longitude)
-      }
-    },
-  });
-}
-*/
-
-//END WORKING CODE
-
-/*
-function csvToJson(csvString) {
-    const rows = csvString
-        .split("\n");
-
-    const headers = rows[0]
-        .split(",");
-
-    const jsonData = [];
-    for (let i = 1; i < rows.length; i++) {
-
-        const values = rows[i]
-            .split(",");
-
-        const obj = {};
-
-        for (let j = 0; j < headers.length; j++) {
-
-            const key = headers[j]
-                .trim();
-            const value = values[j]
-                .trim();
-
-            obj[key] = value;
-        }
-
-        jsonData.push(obj);
-    }
-    return JSON.stringify(jsonData);
-}
-
-*/
-
-/*
-document.getElementById('fileInput').addEventListener('change', function(event) {
-    const file = event.target.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            const content = e.target.result;
-            document.getElementById('output').innerText = content;
-        };
-        reader.readAsText(file);
-    }
-});
-*/
-
-/*Testar map*/
+//Data for the cities
 
 const hamiltonData = new Map();
 const aucklandData = new Map();
@@ -175,251 +30,351 @@ const tottoriData = new Map();
 const warsawData = new Map();
 const wroclawData = new Map();
 
+const countryArray = [
+  "New Zealand","New Zealand",
+  "Ukraine","Ukraine","Ukraine",
+  "Brazil","Brazil",
+  "South Africa","South Africa",
+  "France","France",
+  "Sweden","Sweden",
+  "Japan","Japan",
+  "Poland","Poland",
+];
 
-const countryArray = ["New Zealand", "New Zealand", 
-                      "Ukraine", "Ukraine", "Ukraine", 
-                      "Brazil", "Brazil", 
-                      "South Africa", "South Africa",
-                      "France", "France",
-                      "Sweden", "Sweden",
-                      "Japan", "Japan",
-                      "Poland", "Poland"];
+const cityArray = [
+  "Hamilton","Auckland",
+  "Kiev","Lvov","Odessa",
+  "Brasília","Canoas",
+  "Cape Town","Johannesburg",
+  "Paris","Marseille",
+  "Stockholm","Uppsala",
+  "Tokyo","Tottori",
+  "Warsaw","Wroclaw",
+];
 
-const cityArray =   ["Hamilton", "Auckland", 
-                      "Kiev", "Lvov", "Odessa", 
-                      "Brasília", "Canoas", 
-                      "Cape Town", "Johannesburg",
-                      "Paris", "Marseille",
-                      "Stockholm", "Uppsala",
-                      "Tokyo", "Tottori",
-                      "Warsaw", "Wroclaw"];
-                    
-const dataArray =   [hamiltonData, aucklandData, 
-                      kievData, lvovData, odessaData, 
-                      brasiliaData, canoasData, 
-                      capeTownData, johannesburgData,
-                      parisData, marseilleData,
-                      stockholmData, uppsalaData,
-                      tokyoData, tottoriData,
-                      warsawData, wroclawData];
+const dataArray = [
+  hamiltonData, aucklandData,
+  kievData, lvovData, odessaData,
+  brasiliaData, canoasData,
+  capeTownData, johannesburgData,
+  parisData, marseilleData,
+  stockholmData, uppsalaData,
+  tokyoData, tottoriData,
+  warsawData, wroclawData,
+];
 
+//Selection variables
 
+var selectionLocations = [];
+var selectionTime = [parseInt(lowerSlider.value), parseInt(upperSlider.value)];
 
-var selectionLocations = [];  //array of cities selected
-var selectionTime = [];       //min to max
+var datasets = [];
+var datasetsCity = [];
 
-var datasets = [];            
+const graphColors = [
+  "#FF0000",  // Red
+  "#0000FF",  // Blue
+  "#00FF00",  // Lime
+  "#FFFF00",  // Yellow
+  "#FF00FF",  // Magenta
+  "#00FFFF",  // Cyan
+  "#8B0000",  // Dark Red
+  "#000080",  // Navy
+  "#008000",  // Green
+  "#FFD700",  // Gold
+  "#800080",  // Purple
+  "#FF6347",  // Tomato
+  "#FF1493",  // Deep Pink
+  "#8A2BE2",  // Blue Violet
+  "#D2691E",  // Chocolate
+  "#A52A2A",  // Brown
+  "#4B0082"   // Indigo
+];
 
-const response2 = fetch("tmp2.csv")
-    .then((response2) => response2.text())
-    .then((response2) => papaParseJsonMap(response2))
-    .then((response2) => createChart2(hamiltonData));
-   
+//Fetch data from csv
 
-function setDataset(selectionLocations) {
-  for (let i = 0; i < cityArray.length; i++) {
-    if (city[i] == selectionLocations) {
-      datasets.push(dataArray[i]);
-    }
-  }
-  datasets.push(datas);
-}
+const response2 = fetch("temperature.csv")
+  .then((response2) => response2.text())
+  .then((response2) => parse(response2))
+  .then((response2) => setDataset())
+  .then((response2) => createChart(datasets));
 
-function papaParseJsonMap(tmpCsvData) {
+  createCheckboxes();
+  linkCheckboxes();
+  setLocationCheckboxesEventListener();
+
+//Parse the csv data into a maps
+
+function parse(tmpCsvData) {
   Papa.parse(tmpCsvData, {
     header: true,
     complete: function (results) {
-      //console.log("Finished:", results.data);
       for (let i = 0; i < results.data.length; i++) {
-        if (results.data[i].City === "Hamilton") {
-          hamiltonData.set(
-            results.data[i].year + "/" + results.data[i].month,
-            results.data[i].AverageTemperatureFahr
-          );
-        }
-        if (results.data[i].City === "Auckland") {
-          aucklandData.set(
-            results.data[i].year + "/" + results.data[i].month,
-            results.data[i].AverageTemperatureFahr
-          );
-        }
+        cityArray.forEach((city) => {
+          if (results.data[i].City === city) {
+            let AverageTemperatureCelsius = (results.data[i].AverageTemperatureFahr - 32) * 5 / 9;
+            dataArray[cityArray.indexOf(city)].set(
+              results.data[i].year + "/" + results.data[i].month,
+              AverageTemperatureCelsius
+            );
+          }
+        });
       }
-      console.log(results.data[0].Country);
     },
   });
 }
 
-function createChart2(input) {
-    const labels = Array.from(input.keys());
-    const data = Array.from(input.values());
+//Set the dataset for the chart
 
-  new Chart(ctx, {
+function setDataset() {
+  datasets = [];
+  datasetsCity = [];
+  
+  for (var city of selectionLocations) {
+    for (let i = 0; i < cityArray.length; i++) {
+      if (cityArray[i] == city) {
+        let temp = new Map();
+        for (let [key, value] of dataArray[i]) {
+          let year = parseInt(key[0] + key[1] + key[2] + key[3]);
+          if (year >= selectionTime[0] && year <= selectionTime[1]) {
+            temp.set(key, value);
+          }
+        }
+        datasets.push(temp);
+        datasetsCity.push(city);
+      }
+    }
+  }
+}
+
+//Create the chart
+
+function createChart(input) {
+  var labels = [];
+  if(selectionLocations.length != 0){
+    labels = Array.from(input[0].keys());
+  }
+
+  let i = -1;
+  var data = input.map((element) => {
+    i++;
+    return{
+      label: datasetsCity[datasets.indexOf(element)],
+      data: Array.from(element.values()),
+      backgroundColor: graphColors[i],
+      borderColor: graphColors[i],
+      borderWidth: 1,
+      tension: 0.1,
+      pointRadius: null,
+    }
+  });
+
+   myChart = new Chart(ctx, {
     type: "line",
     data: {
       labels: labels,
-      datasets: [
-        {
-          label: "Hamilton",
-          data: data,
-          backgroundColor: "#00fff0",
-          borderWidth: 3,
-          tension: 0.1,
-        },
-      ],
+      datasets: data,
     },
     options: {
+      responsive: true,
+      maintainAspectRatio: false,
       scales: {
+        x: {
+          title: {
+            display: true,
+            text: "Time",
+          },
+        },
         y: {
-          beginAtZero: true,
+          title: {
+            display: true,
+            text: "Temperature",
+          },
         },
       },
     },
   });
 }
 
-//Script for checkboxes
-//For now it's only New Zealand, is it possible to make it dynamic?
-/*
-const NZcheckbox = document.getElementById("New Zealand");
+//Update the chart with the new selection
 
-const NZTowncheckboxes = [
-  document.getElementById("Auckland"),
-  document.getElementById("Hamilton"),
-];
+function updateSelection() {
+  myChart.data.datasets = [];
+  myChart.labels = [];
+  setDataset();
 
-NZcheckbox.addEventListener("change", function () {
-  if (NZcheckbox.checked) {
-    NZTowncheckboxes.forEach((checkbox) => {
-      checkbox.checked = true;
-    });
-  } else {
-    NZTowncheckboxes.forEach((checkbox) => {
-      checkbox.checked = false;
-    });
-  }
-});
-
-NZTowncheckboxes.forEach((checkbox) => {
-  checkbox.addEventListener("change", function () {
-    if (NZTowncheckboxes.every((checkbox) => checkbox.checked)) {
-      NZcheckbox.checked = true;
-    } else {
-      NZcheckbox.checked = false;
-    }
+  datasets.forEach((element, index) => {
+    const dataset = {
+      label: datasetsCity[index],
+      data: Array.from(element.values()),
+      backgroundColor: graphColors[index % graphColors.length],
+      borderColor: graphColors[index % graphColors.length],
+      borderWidth: 1,
+      tension: 0.1,
+      pointRadius: null,
+    };
+    myChart.data.datasets.push(dataset);
   });
-});
-*/
-//End script for checkboxes
+  if (selectionLocations.length != 0) {
+    myChart.data.labels = Array.from(datasets[0].keys());
+  } else {
+    myChart.data.labels = [];
+  }
+  myChart.update();
+}
 
+//Script for dropdown in time selection
 
 function toggleShow() {
   const dropdown = document.getElementById("hiddenCalendar");
-  const button = event.target; 
+  const button = event.target;
 
   dropdown.classList.toggle("show");
 
   const rect = button.getBoundingClientRect();
 
   dropdown.style.top = `${rect.bottom + window.scrollY}px`;
-  dropdown.style.left = `${rect.left + window.scrollX}px`;
+  dropdown.style.left = `${rect.left + window.scrollX }px`;
 }
 
-//Timespan Slider
-const startTimeInput = document.getElementById('startTime');
-const endTimeInput = document.getElementById('endTime');
-const displayLowTimeValue = document.getElementById('display-low-value');
-const displayHighTimeValue = document.getElementById('display-high-value');
-const lowerSlider = document.getElementById('lower');
-const upperSlider = document.getElementById('upper');
+//Create checkboxes
 
-function updateYearSpan(){
-    const startValue = startTimeInput.value || "1870";
-    const endValue = endTimeInput.value || "2000";
-
-    if(1850 <= startValue && startValue <= 2020){
-      displayLowTimeValue.textContent = startValue;
-      lowerSlider.value = startValue;
-    }
-    if(1850 <= endValue && endValue <= 2020){
-      displayHighTimeValue.textContent = endValue;
-      upperSlider.value = endValue;
-    }
-}
-
-let labelArray = [];
-
-function createDynamicCheckbox(){
-  const locationBox = document.getElementById('checkLocationBox');
- 
-  
+function createCheckboxes() {
+  let labelArray = [];
+  const locationBox = document.getElementById("checkLocationBox");
 
   let lastCountry = "start";
-  for(let i = 0; i < countryArray.length; i++){
-    let myLabel = document.createElement('label');
-    let myCheckbox = document.createElement('input');
-    myCheckbox.type = 'checkbox';
+  for (let i = 0; i < countryArray.length; i++) {
+    let myLabel = document.createElement("label");
+    let myCheckbox = document.createElement("input");
+    myCheckbox.type = "checkbox";
 
     let currentCountry = countryArray[i];
 
-    if (currentCountry != lastCountry){
-      let myCountryLabel = document.createElement('label');
-      let myCountryCheckbox = document.createElement('input');
-      myCountryCheckbox.type = 'checkbox'
-      console.log("")
-      console.log(currentCountry + " " + i)
-      myCountryLabel.className = 'containerLand';
+    if (currentCountry != lastCountry) {
+      let myCountryLabel = document.createElement("label");
+      let myCountryCheckbox = document.createElement("input");
+      myCountryCheckbox.type = "checkbox";
+      myCountryLabel.className = "containerLand";
       myCountryCheckbox.id = currentCountry;
       myCountryCheckbox.value = currentCountry;
       myCountryLabel.appendChild(myCountryCheckbox);
       myCountryLabel.innerHTML += countryArray[i];
       labelArray.push(myCountryLabel);
       lastCountry = currentCountry;
-
     }
-    
-    console.log(cityArray[i] + " " + i)
-    myLabel.className = 'containerStad';
+    myLabel.className = "containerStad";
     myCheckbox.id = cityArray[i];
     myCheckbox.value = cityArray[i];
-    
+
     myLabel.appendChild(myCheckbox);
     myLabel.innerHTML += cityArray[i];
     labelArray.push(myLabel);
-    
-
-    
   }
-  
-  labelArray.forEach((checkbox) =>{
+
+  labelArray.forEach((checkbox) => {
     locationBox.appendChild(checkbox);
   });
 }
 
-  
-createDynamicCheckbox();
+//Linking checkboxes
 
-/*
-const countryArray = ["New Zealand", "New Zealand"];
-const cityArray = ["Hamilton", "Auckland"];
-const dataArray = [hamiltonData, aucklandData];
-*/
+function linkCheckboxes() {
+  const countryCitiesLink = [];
 
+  countryArray.forEach((country, index) => {
+    if (!countryCitiesLink[country]) {
+      countryCitiesLink[country] = [];
+    }
+    countryCitiesLink[country].push(cityArray[index]);
+  });
 
-function updateSliderValues(){
+  Object.keys(countryCitiesLink).forEach(country => {
+    const countryCheckbox = document.getElementById(country);
+    const cityCheckboxes = countryCitiesLink[country].map(city => 
+      document.getElementById(city)
+    );
+
+    countryCheckbox.addEventListener("change", function () {
+      cityCheckboxes.forEach(checkbox => {
+        checkbox.checked = countryCheckbox.checked;
+      });
+    });
+
+    cityCheckboxes.forEach(checkbox => {
+      checkbox.addEventListener("change", function () {
+        if (cityCheckboxes.every(city => city.checked)) {
+          countryCheckbox.checked = true;
+        } else {
+          countryCheckbox.checked = false;
+        }
+      });
+    });
+  });
+}
+
+//Timespan selection
+
+function updateYearSpan() {
+  const startValue = startTimeInput.value || "1870";
+  const endValue = endTimeInput.value || "2000";
+
+  if (1850 <= startValue && startValue <= 2020) {
+    displayLowTimeValue.textContent = startValue;
+    lowerSlider.value = startValue;
+    selectionTime = [lowerSlider.value, upperSlider.value];
+    selectionTime = [parseInt(lowerSlider.value), parseInt(upperSlider.value)];
+    updateSelection();
+  }
+  if (1850 <= endValue && endValue <= 2020) {
+    displayHighTimeValue.textContent = endValue;
+    upperSlider.value = endValue;
+    selectionTime = [lowerSlider.value, upperSlider.value];
+    selectionTime = [parseInt(lowerSlider.value), parseInt(upperSlider.value)];
+    updateSelection();
+  }
+}
+
+function updateSliderValues() {
   const startValue = parseInt(lowerSlider.value);
   const endValue = parseInt(upperSlider.value);
 
-  if(startValue <= endValue){
+  if (startValue <= endValue) {
     displayLowTimeValue.textContent = startValue;
     displayHighTimeValue.textContent = endValue;
 
     lowerSlider.value = startValue;
     upperSlider.value = endValue;
+    selectionTime = [parseInt(lowerSlider.value), parseInt(upperSlider.value)];
+    updateSelection();
   }
 }
 
-startTimeInput.addEventListener('input', updateYearSpan);
-endTimeInput.addEventListener('input', updateYearSpan);
-lowerSlider.addEventListener('input', updateSliderValues);
-upperSlider.addEventListener('input', updateSliderValues);
+startTimeInput.addEventListener("input", updateYearSpan);
+endTimeInput.addEventListener("input", updateYearSpan);
+lowerSlider.addEventListener("input", updateSliderValues);
+upperSlider.addEventListener("input", updateSliderValues);
 
+//Location selection
+
+function setLocationCheckboxesEventListener() {
+  const cityCheckboxes = document.querySelectorAll("#checkLocationBox input");
+  
+  cityCheckboxes.forEach(checkbox => {
+    checkbox.addEventListener("change", function () {
+      setLocationSelection();
+      updateSelection();
+    }
+    );
+  });
+}
+
+function setLocationSelection() {
+  selectionLocations = [];
+  const cityCheckboxes = document.querySelectorAll("#checkLocationBox input");
+  cityCheckboxes.forEach(checkbox => {
+    if (checkbox.checked) {
+      selectionLocations.push(checkbox.value);
+    }
+  });
+}
